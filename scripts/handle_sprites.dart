@@ -890,7 +890,9 @@ void drawWhatever(canvas, imageString){
         print("img was null!");
         print("was looking for ${escapeId(imageString)}");
     }
-	ctx.drawImage(img, 0, 0);
+    else {
+	    ctx.drawImage(img, 0, 0);
+    }
 }
 
 
@@ -2707,15 +2709,15 @@ int wrap_text(ctx, text, x, y, lineHeight, maxWidth, textAlign) {
   List<dynamic> lines = [];
   num sliceFrom = 0;
   for(num i = 0; i < words.length; i++) {
-    var chunk = words.slice(sliceFrom, i).join(' ');
+    var chunk = words.getRange(sliceFrom, i).join(' ');
     var last = i == words.length - 1;
     var bigger = ctx.measureText(chunk).width > maxWidth;
     if(bigger) {
-      lines.add(words.slice(sliceFrom, i).join(' '));
+      lines.add(words.getRange(sliceFrom, i).join(' '));
       sliceFrom = i;
     }
     if(last) {
-      lines.add(words.slice(sliceFrom, words.length).join(' '));
+      lines.add(words.getRange(sliceFrom, words.length).join(' '));
       sliceFrom = i;
     }
   }
