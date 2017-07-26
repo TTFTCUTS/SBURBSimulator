@@ -61,7 +61,7 @@ class Intro  extends IntroScene{
 	  String ret = "";
 		if(this.player.object_to_prototype.getStat("power") > 200 && rand.nextDouble() > .8){
 			String divID = (div.id);
-			String canvasHTML = "<br><canvas id;='canvaskernel" + divID+"' width='" +canvasWidth.toString() + "' height;="+canvasHeight.toString() + "'>  </canvas>";
+			String canvasHTML = "<br><canvas id='canvaskernel" + divID+"' width='" +canvasWidth.toString() + "' height="+canvasHeight.toString() + "'>  </canvas>";
 			div.appendHtml(canvasHTML);
 			CanvasElement canvas = querySelector("#canvaskernel"+ divID);
 			List<Player> times = findAllAspectPlayers(this.session.players, "Time"); //they don't have to be in the medium, though
@@ -646,7 +646,7 @@ class Intro  extends IntroScene{
 	@override
 	void renderContent(div, i){
 		//foundRareSession(div, "This is just a test. " + this.session.session_id);
-		String canvasHTML = "<canvas style;='display:none' class = 'charSheet' id;='firstcanvas" + this.player.id.toString()+"_" + this.session.session_id.toString()+"' width='400' height;='1000'>  </canvas>";
+		Element canvasHTML = new Element.html("<canvas class = 'charSheet hidden' id='firstcanvas" + this.player.id.toString()+"_" + this.session.session_id.toString()+"' width='400' height='1000'>  </canvas>");
 		div.append(canvasHTML);
 		var canvasDiv = querySelector("#firstcanvas"+ this.player.id.toString()+"_" + this.session.session_id.toString());
 		drawCharSheet(canvasDiv,this.player);
@@ -694,7 +694,7 @@ class Intro  extends IntroScene{
 				//print("initially unlucky player: " +this.session.session_id);
 				narration += " They have an insurmountable stockpile of TERRIBLE LUCK.";
 			}
-			
+
 			if(this.player.fraymotifs.length > 0){
 				//print("initially unlucky player: " +this.session.session_id);
 				narration += " They have special powers, including " + turnArrayIntoHumanSentence(this.player.fraymotifs) + ". ";
