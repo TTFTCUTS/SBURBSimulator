@@ -5,7 +5,7 @@ class JackBeginScheming extends Scene {
 	//Session session;
 	List<Player> playerList = [];  //what players are already in the medium when i trigger?
 	Player friend = null;	//blood or page or thief or rogue.  don't go for non native players
-	
+
 
 
 	JackBeginScheming(Session session): super(session);
@@ -35,6 +35,15 @@ class JackBeginScheming extends Scene {
 	@override
 	dynamic trigger(playerList){
 		this.playerList = playerList;
+		// TODO: This is an absolutely horrible hack since Dart doesn't give us an easy way to check if an object has a variable or not...
+		try {
+			if(this.session.jack == null) {
+				return false; // so we try to get it (if it's null, return false anyway)
+			}
+		}
+		catch (e) {
+			return false; // and if we can't get it, return false
+		}
 		if(this.session.jack.getStat("currentHP") <= 0 && !this.session.jack.dead|| this.session.queen.getStat("currentHP") <= 0 && !this.session.queen.dead){  //the dead can't scheme or be schemed against
 			return false;
 		}

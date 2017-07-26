@@ -133,7 +133,7 @@ class StoryController extends SimController {
   void intro() {
     createInitialSprites();
     //advertisePatreon(querySelector("#story"));
-    callNextIntro(0);
+    callNextIntro(0); //temporary -PL
   }
 
   @override

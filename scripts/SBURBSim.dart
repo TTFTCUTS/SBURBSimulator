@@ -174,7 +174,7 @@ bool printCorruptionMessage(String msg, String url, String lineNo, String column
     str = "<BR>"+player.chatHandle + ":";
     var rand = ["SAVE US", "GIVE UP", "FIX IT", "HELP US", "WHY?", "OBEY", "CEASE REPRODUCTION", "COWER", "IT KEEPS HAPPENING", "SBURB BROKE US. WE BROKE SBURB.", "I AM THE EMISSARY OF THE NOBLE CIRCLE OF THE HORRORTERRORS."];
     String start = "<b ";
-    String end = "'>";
+    String end = "\">";
 
     var words = curSessionGlobalVar.rand.pickFrom(rand);
     words = Zalgo.generate(words);
@@ -414,4 +414,3 @@ void renderAfterlifeURL(){
     print("no ghosts");
   }
 }
-

@@ -11,7 +11,7 @@ class FreeWillStuff extends Scene{
 	var playerGodTiered = null;	//luck can be good or it can be bad.
 	//should something special happen if you have a lot of negative free will? like...
 	//maybe exile shenanigans?
-	
+
 
 
 	FreeWillStuff(Session session): super(session);
@@ -34,7 +34,7 @@ class FreeWillStuff extends Scene{
 				this.decision = breakFree;
 				return true;
 			}
-			if(player.freeWill > 200 || player.canMindControl()){  //don't even get to consider a decision if you don't have  more than default free will.//TODO raise to over 60 'cause that is highest default free will possible. want free will to be rarer.
+			if(player.getStat("freeWill") > 200 || player.canMindControl()){  //don't even get to consider a decision if you don't have  more than default free will.//TODO raise to over 60 'cause that is highest default free will possible. want free will to be rarer.
 				var decision = this.getPlayerDecision(player);
 				if(decision){
 					this.player = player;
@@ -86,7 +86,7 @@ class FreeWillStuff extends Scene{
 		if( pname){
 			print("psychic powers used to mind control in session: " + this.session.session_id.toString());
 			psionic =  " The " + this.player.htmlTitleBasic() + " uses their "+ pname + ". ";
-		} 
+		}
 		div.append("<br><img src = 'images/sceneIcons/freewill_icon.png'> "+psionic + this.content());
 		if(this.playerGodTiered){
 			this.renderGodTier(div);

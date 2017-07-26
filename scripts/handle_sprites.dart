@@ -99,7 +99,7 @@ void rainbowSwap(CanvasElement canvas){
     ImageElement img = imageSelector(imageString);
     int width = img.width;
   	int height = img.height;
-	
+
 	 CanvasElement rainbow_canvas = getBufferCanvas(querySelector("#rainbow_template"));
   CanvasRenderingContext2D rctx = rainbow_canvas.context2D;
   	rctx.drawImage(img,0,0);
@@ -150,7 +150,7 @@ void drainedGhostSwap(CanvasElement canvas){
     ImageElement img = imageSelector(imageString);
     int width = img.width;
   	int height = img.height;
-	
+
 	 CanvasElement rainbow_canvas = getBufferCanvas(querySelector("#rainbow_template"));
   CanvasRenderingContext2D rctx = rainbow_canvas.context2D;
   	rctx.drawImage(img,0,0);
@@ -179,7 +179,7 @@ void ghostSwap(CanvasElement canvas){
     ImageElement img = imageSelector(imageString);
     int width = img.width;
   	int height = img.height;
-	
+
 	 CanvasElement rainbow_canvas = getBufferCanvas(querySelector("#rainbow_template"));
 	CanvasRenderingContext2D rctx = rainbow_canvas.context2D;
   	rctx.drawImage(img,0,0);
@@ -415,7 +415,7 @@ void rightHorn(CanvasElement canvas, Player player){
 void addImageTag(String url){
   //print(url);
 	//only do it if image hasn't already been added.
-	if(imageSelector(url) == null) {
+	if(querySelector("#${escapeId(url)}") == null) {
 		String tag = '<img id="' + escapeId(url) + '" src = "images/' + url + '" class="loadedimg">';
 		querySelector("#image_staging").appendHtml(tag,treeSanitizer: NodeTreeSanitizer.trusted);
 	}
@@ -869,10 +869,11 @@ void drawWhatever(CanvasElement canvas, String imageString){
 	addImageTag(imageString);
 	ImageElement img = imageSelector(imageString);
     if(img == null) {
-        print("img was null!");
-        print("was looking for ${escapeId(imageString)}");
+        throw("Image was null when drawing. Was looking for ${escapeId(imageString)}");
     }
-	ctx.drawImage(img, 0, 0);
+    else {
+	    ctx.drawImage(img, 0, 0);
+    }
 }
 
 
@@ -1033,10 +1034,11 @@ void drawChatJRPlayer(CanvasElement canvas, String chat, Player player){
 	CanvasRenderingContext2D ctx = canvasSpriteBuffer.getContext('2d');
 	String imageString = "pesterchum.png";
 	addImageTag(imageString);
-	ImageElement img = imageSelector(imageString);
-		    if(img == null) {
-        print("img was null!");
-        print("was looking for ${escapeId(imageString)}");
+	var img=querySelector("#${escapeId(imageString)}");
+	var width = img.width;
+	var height = img.height;
+    if(img == null) {
+        throw("Image was null. Looking for ${escapeId(imageString)}");
     }
 	ctx.drawImage(img,0,0);
 

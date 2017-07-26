@@ -11,7 +11,7 @@ class Quirk {
  int capitalization = 0;  //0 == none, 4 = alternating, 5= inverted, 3 = begining of every word, 1 = normal, 2 = ALL;
  int favoriteNumber = 0; //getRandomInt;    //num favoriteNumber = 8;    //4 and 6 and 12 has green not change, 7 has SOME green not change
     //take an input string and quirkify it.
-    
+
     Random rand;
 
 

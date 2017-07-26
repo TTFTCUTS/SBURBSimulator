@@ -11,7 +11,7 @@ class QuadrantDialogue extends Scene {
 	Player player2 = null;
 	String player1Start = null;
 	String player2Start = null;	//this should have a higher priority than land quests, 'cause the point is relationships distract you from playing the damn game.
-	
+
 
 
 	QuadrantDialogue(Session session): super(session);
@@ -638,7 +638,7 @@ class PlusMinusConversationalPair {
 	var openingLines;
 	var positiveRespones;
 	var negativeResponses;	//have a variety of ways you can start.
-	
+
 
 
 	PlusMinusConversationalPair(this.openingLines, this.positiveRespones, this.negativeResponses) {}
@@ -673,7 +673,7 @@ class ConversationalPair {
 	var genericResponses = ["Yeah.", ":)", "Tell me more", "You don't say.",  "Wow", "Cool", "Fascinating", "Uh-huh.", "Sure.", "I've heard others say the same.", "... ", "Whatever.", "Yes.", "Interesting...", "Hrmmm...", "lol", "Interesting!!!", "Umm. Okay?", "Really?", "Whatever floats your boat.","Why not", "K."];
 
 
-	
+
 
 
 	ConversationalPair(this.line1, this.responseLines) {}

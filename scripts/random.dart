@@ -30,9 +30,23 @@ class Random implements Math.Random {
 		this._impl = new Math.Random(seed);
 	}
 
-	int nextIntRange(int min, int max) => this.nextInt(max-min) + min;
+	int nextIntRange(int min, int max) { 
+		//TODO: fix this crappy workaround
+		if(min > 0) {
+			return this.nextInt(max-min) + min;
+		}
+		else if(min < 0){
+			return this.nextInt((max+(-min)))+min;
+		}
+		else {
+			return 0;
+		}
+	}
 
 	T pickFrom<T>(List<T> list) {
+		if(list.length == 0) {
+			throw("Trying to pick from empty list."); // Best to just throw an exception here
+		}
 		return list[this.nextInt(list.length)];
 	}
 }

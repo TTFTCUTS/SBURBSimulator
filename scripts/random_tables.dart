@@ -1166,7 +1166,9 @@ List<T> shuffle<T>(Random rand, List<T> array) {
 
 void removeFromArray(item, array){
 	var index = array.indexOf(item);
-	array.removeAt(index);
+    if(index > -1){
+        array.removeAt(index);
+    }
 }
 
 

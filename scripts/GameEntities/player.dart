@@ -134,7 +134,7 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 	void generateDenizen(){
 		var possibilities = this.getDenizenNameArray();
 		var strength = this.getOverallStrength();
-		num expectedMaxStrength = 150;  //if i change how stats work, i need to update this value 
+		num expectedMaxStrength = 150;  //if i change how stats work, i need to update this value
 		var strengthPerTier = (expectedMaxStrength)/possibilities.length;
 		//print("Strength at start is, " + strength);//but what if you don't want STRANGTH!???
 		var denizenIndex = (strength/strengthPerTier).round()-1;  //want lowest value to be off the denizen array.
@@ -181,16 +181,18 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 			if(stat.name == "MANGRIT"){
 				tmpStatHolder["power" ]= tmpStatHolder["power"] * stat.multiplier * strength;
 			}else{
-				tmpStatHolder[stat.name] += tmpStatHolder[stat.name] * stat.multiplier * strength;
-			} 
+				if(tmpStatHolder[stat.name] != null) {
+					tmpStatHolder[stat.name] += (tmpStatHolder[stat.name] ?? 0) * stat.multiplier * strength;
+				}
+			}
 		}
 
 		//denizenMinion.setStats(tmpStatHolder.minLuck,tmpStatHolder.maxLuck,tmpStatHolder.hp,tmpStatHolder.mobility,tmpStatHolder.sanity,tmpStatHolder.freeWill,tmpStatHolder.power,true, false, [],1000);
-		
+
 		denizenMinion.setStatsHash(tmpStatHolder);
 		tmpStatHolder["power"] = 10*strength;
 		for(String key in tmpStatHolder.keys){
-			tmpStatHolder[key] = tmpStatHolder[key] * 2; // same direction as minion stats, but bigger. 
+			tmpStatHolder[key] = tmpStatHolder[key] * 2; // same direction as minion stats, but bigger.
 		}
 		//denizen.setStats(tmpStatHolder.minLuck,tmpStatHolder.maxLuck,tmpStatHolder.hp,tmpStatHolder.mobility,tmpStatHolder.sanity,tmpStatHolder.freeWill,tmpStatHolder.power,true, false, [],1000000);
 		denizen.setStatsHash(tmpStatHolder);
@@ -2947,10 +2949,12 @@ Player clonePlayer(Player player, Session session, bool isGuardian) {
 
 
 //mobility is "natural" way to sort players but this works, too.
-  void sortPlayersByFreeWill(List<Player> players) {
-    return players.sort((Player a, Player b) {
-      return a.getStat("freeWill") - b.getStat("freeWill");
-    });
+  List<Player> sortPlayersByFreeWill(List<Player> players) {
+	  if(players == null) {
+		  throw("sortPlayersByFreeWill was called, but players was null");
+	  }
+	  players.sort((Player a, Player b) => a.getStat("freeWill").compareTo(b.getStat("freeWill")));
+	  return players;
   }
 
 

@@ -5,7 +5,7 @@ class QueenRejectRing extends Scene {
 	bool canRepeat = false;
 	List<dynamic> playerList = [];  //what players are already in the medium when i trigger?
 
-	
+
 
 
 	QueenRejectRing(Session session): super(session);
@@ -22,7 +22,7 @@ class QueenRejectRing extends Scene {
 
 	@override
 	void renderContent(div){
-		div.append("<br> <img src = 'images/sceneIcons/bq_icon.png'> "+this.content());
+		div.append(new Element.html("<span><br> <img src = 'images/sceneIcons/bq_icon.png'> "+this.content()+"</span>"));
 	}
 	dynamic content(){
 		this.session.queenRejectRing = true;

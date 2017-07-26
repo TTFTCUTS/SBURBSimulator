@@ -9,7 +9,7 @@ class SolvePuzzles extends Scene {
 	var player2 = null; //optional
 
 
-	
+
 
 
 	SolvePuzzles(Session session): super(session);
@@ -76,7 +76,7 @@ class SolvePuzzles extends Scene {
 			//shits on adventure game tropes and just uses a cheat code to solve the puzzle (star.eyes from discorse)
 			var possibilities = ["learning the true meaning of " + landChosen,"learning to really hate the entire concept of " + landChosen,"getting really fucking sick of " + landChosen,  "getting coy hints about The Ultimate Riddle","shitting on adventure game tropes and just using a cheat code","killing underlings","delving into dungeons", "exploring ruins", "solving puzzles", "playing minigames", "learning about the lore"];
 			var thing1 = rand.pickFrom(possibilities);
-			possibilities.removeFromArray(thing1);
+			possibilities.remove(thing1);
 			var thing2 = rand.pickFrom(possibilities);
 			return "random bullshit sidequests at " + this.player1.shortLand() + ", " + thing1 + " and " + thing2 + ". ";
 	}
@@ -84,7 +84,7 @@ class SolvePuzzles extends Scene {
 	@override
 	void renderContent(div){
 		//print("Ultimate Riddle for Player with power of: " + this.player1.power + " and land level of: " + this.player1.landLevel + " " + this.player1);
-		div.append("<br> <img src = 'images/sceneIcons/sidequest_icon.png'> "+this.content());
+		div.append(new Element.html("<span><br> <img src = 'images/sceneIcons/sidequest_icon.png'> "+this.content()+"</span>"));
 	}
 	String spreadCoruption(player1, player2){
 		bool ret = false;

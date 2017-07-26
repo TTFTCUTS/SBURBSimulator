@@ -114,14 +114,14 @@ dynamic checkDone(String skipInit){
 		if(callBack != null) return callBack();
       if(skipInit == "oc"){
         print("images loaded: $imagesLoaded");
-				throw("not supported yet.");
+		throw("not supported yet.");
         //reroll();
         return null;
       }else if(skipInit == "ghosts"){
       	throw("not supported yet.");
         //renderGhosts();
       }else{
-				throw("not supported yet.");
+		throw("not supported yet.");
         //renderPlayersForEditing();
       }
       return null;

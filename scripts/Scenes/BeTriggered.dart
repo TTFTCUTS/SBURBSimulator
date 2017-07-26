@@ -5,7 +5,7 @@ class BeTriggered extends Scene{
 	bool canRepeat = true;
 	List<dynamic> playerList = [];  //what players are already in the medium when i trigger?
 	List<dynamic> triggeredPlayers = [];
-	List<dynamic> triggers = [];	
+	List<dynamic> triggers = [];
 
 
 	BeTriggered(Session session): super(session);
@@ -47,7 +47,7 @@ class BeTriggered extends Scene{
 			return true; //i am flipping out over not a dead player, thank you very much.
 
 		}
-		if(-1 * player.sanity > rand.nextDouble() * 100 ){
+		if(-1 * player.getStat("sanity") > rand.nextDouble() * 100 ){
 			player.flipOutReason = "how they seem to be going shithive maggots for no goddamned reason";
 			return true;
 		}
