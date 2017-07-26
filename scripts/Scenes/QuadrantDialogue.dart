@@ -11,7 +11,7 @@ class QuadrantDialogue extends Scene {
 	var player2 = null;
 	var player1Start = null;
 	var player2Start = null;	//this should have a higher priority than land quests, 'cause the point is relationships distract you from playing the damn game.
-	
+
 
 
 	QuadrantDialogue(Session session): super(session);
@@ -36,8 +36,9 @@ class QuadrantDialogue extends Scene {
 			var p = this.session.availablePlayers[i];
 			if(p.isQuadranted() && p.grimDark < 2) quadrants.add(p); //grim dark players don't initiate conversaion.
 		}
+		if(quadrants.length == 0) return;
 		this.player1 = rand.pickFrom(quadrants);
-		if(this.player1) this.findQuardrantMate();
+		if(this.player1 != null) this.findQuardrantMate();
 	}
 	void findQuardrantMate(){
 		//set this.player2 to be one of player1's quadrant mates. first diamond, then randomly from heart, then spade, then clubs.
@@ -632,7 +633,7 @@ class PlusMinusConversationalPair {
 	var openingLines;
 	var positiveRespones;
 	var negativeResponses;	//have a variety of ways you can start.
-	
+
 
 
 	PlusMinusConversationalPair(this.openingLines, this.positiveRespones, this.negativeResponses) {}
@@ -667,7 +668,7 @@ class ConversationalPair {
 	var genericResponses = ["Yeah.", ":)", "Tell me more", "You don't say.",  "Wow", "Cool", "Fascinating", "Uh-huh.", "Sure.", "I've heard others say the same.", "... ", "Whatever.", "Yes.", "Interesting...", "Hrmmm...", "lol", "Interesting!!!", "Umm. Okay?", "Really?", "Whatever floats your boat.","Why not", "K."];
 
 
-	
+
 
 
 	ConversationalPair(this.line1, this.responseLines) {}

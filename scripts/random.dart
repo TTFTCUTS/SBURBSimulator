@@ -43,6 +43,9 @@ class Random implements Math.Random {
 	}
 
 	T pickFrom<T>(List<T> list) {
+		if(list.length == 0) {
+			throw("Trying to pick from empty list."); // Best to just throw an exception here
+		}
 		return list[this.nextInt(list.length)];
 	}
 }
