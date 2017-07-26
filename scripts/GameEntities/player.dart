@@ -194,7 +194,6 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 		for(String key in tmpStatHolder.keys){
 			tmpStatHolder[key] = tmpStatHolder[key] * 2; // same direction as minion stats, but bigger.
 		}
-		tmpStatHolder.keys.forEach((k) => doubleStats);
 		//denizen.setStats(tmpStatHolder.minLuck,tmpStatHolder.maxLuck,tmpStatHolder.hp,tmpStatHolder.mobility,tmpStatHolder.sanity,tmpStatHolder.freeWill,tmpStatHolder.power,true, false, [],1000000);
 		denizen.setStatsHash(tmpStatHolder);
 		this.denizen = denizen;
