@@ -5,9 +5,10 @@ part of SBURBSim;
 class GameEntity implements Comparable{
   //TODO figure out how i want tier 2 sprites to work. prototyping with a carapace and then a  player and then god tiering should result in a god tier Player that can use the Royalty's Items.
   Session session;
+  //TODO replace 'minLuck' with 'destiny'
   String name;
   String fontColor = "#000000";
-  bool ghost; //if you are ghost, you are rendered spoopy style
+  bool ghost = false; //if you are ghost, you are rendered spoopy style
   num grist; //everything has it.
   bool dead = false;
   bool exiled = false;
@@ -21,7 +22,7 @@ class GameEntity implements Comparable{
   HashMap permaBuffs = {"MANGRIT":0}; //is an object so it looks like a player with stats.  for things like manGrit which are permanent buffs to power (because modding power directly gets OP as shit because power controls future power)
   num renderingType = 0; //0 means default for this sim.
   List<AssociatedStat> associatedStats = [];  //most players will have a 2x, a 1x and a -1x stat.
-  var spriteCanvasID = null;  //part of new rendering engine.
+  String spriteCanvasID = null;  //part of new rendering engine.
   num id;
   bool doomed = false; //if you are doomed, no matter what you are, you are likely to die.
   List<Player> doomedTimeClones = []; //help fight the final boss(es).
@@ -348,7 +349,7 @@ class GameEntity implements Comparable{
       div.appendHtml(ret);
       Player myGhost = this.session.afterLife.findClosesToRealSelf(this);
       removeFromArray(myGhost, this.session.afterLife.ghosts);
-      CanvasElement canvas = drawReviveDead(div, this, source, undrainedPacts[0][1]);
+     // CanvasElement canvas = drawReviveDead(div, this, source, undrainedPacts[0][1]);
       makeAlive();
       if(undrainedPacts[0][1] == "Life"){
         addStat("currentHP",100); //i won't let you die again.
