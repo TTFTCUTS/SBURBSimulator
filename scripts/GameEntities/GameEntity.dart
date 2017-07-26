@@ -453,7 +453,12 @@ class GameEntity implements Comparable{
       ret += this.permaBuffs["MANGRIT"]; //needed because if i mod power directly, it effects all future progress in an unbalanced way.;
       ret = Math.max(0, ret); //no negative power, dunkass.
     }
-    return (ret).round();
+    if(ret != null) {
+        return (ret).round();
+    }
+    else {
+        return 0; // Just return zero if we can't find the stat
+    }
   }
 
   //sets current hp to max hp. mostly called after strifes assuming you'll use healing items
@@ -591,4 +596,3 @@ class Buff {
   String name;
   num value;
 }
-

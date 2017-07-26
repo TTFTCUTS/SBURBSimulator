@@ -134,7 +134,7 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 	void generateDenizen(){
 		var possibilities = this.getDenizenNameArray();
 		var strength = this.getOverallStrength();
-		num expectedMaxStrength = 150;  //if i change how stats work, i need to update this value 
+		num expectedMaxStrength = 150;  //if i change how stats work, i need to update this value
 		var strengthPerTier = (expectedMaxStrength)/possibilities.length;
 		//print("Strength at start is, " + strength);//but what if you don't want STRANGTH!???
 		var denizenIndex = (strength/strengthPerTier).round()-1;  //want lowest value to be off the denizen array.
@@ -183,16 +183,19 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 				tmpStatHolder.power = tmpStatHolder.power * stat.multiplier * strength;
 			}else{
 				tmpStatHolder[stat.name] += tmpStatHolder[stat.name] * stat.multiplier * strength;
-			} 
+			}
 		}
 
 		//denizenMinion.setStats(tmpStatHolder.minLuck,tmpStatHolder.maxLuck,tmpStatHolder.hp,tmpStatHolder.mobility,tmpStatHolder.sanity,tmpStatHolder.freeWill,tmpStatHolder.power,true, false, [],1000);
-		
+
 		denizenMinion.setStatsHash(tmpStatHolder);
-		tmpStatHolder.power = 10*strength;
-		for(var key in tmpStatHolder){
-			tmpStatHolder[key] = tmpStatHolder[key] * 2; // same direction as minion stats, but bigger. 
+		tmpStatHolder["power"] = 10*strength;
+		void doubleStats(key,statHolder) {
+			if(statHolder[key] is int || statHolder[key] is double) {
+				statHolder[key] = statHolder[key] * 2;
+			}
 		}
+		tmpStatHolder.keys.forEach((k) => doubleStats); 
 		//denizen.setStats(tmpStatHolder.minLuck,tmpStatHolder.maxLuck,tmpStatHolder.hp,tmpStatHolder.mobility,tmpStatHolder.sanity,tmpStatHolder.freeWill,tmpStatHolder.power,true, false, [],1000000);
 		denizen.setStatsHash(tmpStatHolder);
 		this.denizen = denizen;

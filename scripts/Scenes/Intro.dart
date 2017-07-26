@@ -99,7 +99,7 @@ class Intro  extends IntroScene{
 		var current_mvp = findStrongestPlayer(this.session.players);
 		//print("Entering session, mvp is: " + current_mvp.power);
 		if(this.player.aspect == "Time" && !this.player.object_to_prototype.illegal){
-			return this.session.addImportantEvent(new TimePlayerEnteredSessionWihtoutFrog(this.session, current_mvp.power,this.player,null) );
+			return this.session.addImportantEvent(new TimePlayerEnteredSessionWihtoutFrog(this.session, current_mvp.stats["power"],this.player,null) );
 		}else{
 			return this.session.addImportantEvent(new PlayerEnteredSession(this.session, current_mvp.power,this.player,null) );
 		}
@@ -568,7 +568,7 @@ class Intro  extends IntroScene{
 				}
 
 		}
-		drawChat(querySelector("#canvas"+ (div.attr("id"))), player1, player2, chatText,"discuss_sburb.png");
+		drawChat(querySelector("#canvas"+ (div.getAttribute("id"))), player1, player2, chatText,"discuss_sburb.png");
 		return null;
 	}
 	dynamic getChat(player1, player2, div){
@@ -612,7 +612,7 @@ class Intro  extends IntroScene{
 	}
 	dynamic chat(div){
 		num repeatTime = 1000;
-		String canvasHTML = "<br><canvas id;='canvas" + (div.attr("id")) +"' width='" +canvasWidth.toString() + "' height;="+canvasHeight.toString() + "'>  </canvas>";
+		Element canvasHTML = new Element.html("<span><br><canvas id='canvas" + (div.getAttribute("id")) +"' width='" +canvasWidth.toString() + "' height="+canvasHeight.toString() + "'>  </canvas></span>");
 		div.append(canvasHTML);
 		//first, find/make pesterchum skin. Want it to be no more than 300 tall for now.
 		//then, have some text I want to render to it.
@@ -748,7 +748,7 @@ class Intro  extends IntroScene{
 			}
 			narration += "The Black King's SCEPTER grows stronger from prototyping the " +  this.player.object_to_prototype.name +". ";
 		}
-		div.append(narration);
+		div.append(new Element.html("<span>${narration}</span>"));
 		this.chat(div);
 		this.session.availablePlayers.add(this.player);
 	}
