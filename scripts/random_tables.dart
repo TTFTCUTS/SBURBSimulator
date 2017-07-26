@@ -1166,7 +1166,9 @@ List<T> shuffle<T>(Random rand, List<T> array) {
 
 void removeFromArray(item, array){
 	var index = array.indexOf(item);
-	array.removeAt(index);
+    if(index > -1){
+        array.removeAt(index);
+    }
 }
 
 
@@ -1319,9 +1321,7 @@ List<String> free_land_titles = ["Snowlake", "Heat","Sand","Brains","Haze","Tea"
 ..addAll(["Obsolescence","Deceit","Ruse","Distraction","Libraries","Blocks","Video Games","Vermin","Butchers","Meat","Clouds", "Horses"]);
 
 //google is an in joke because apparently google reports that all sessions are crashed and it is beautiful and google is a horrorterror.
-List<String> corruptedOtherLandTitles = [Zalgo.generate("Google"), Zalgo.generate("Horrorterrors"),Zalgo.generate("Glitches"),Zalgo.generate("Grimoires"),Zalgo.generate("Fluthlu"),Zalgo.generate("The Zoologically Dubious")]
-..addAll(corruptedOtherLandTitles);
-
+List<String> corruptedOtherLandTitles = [Zalgo.generate("Google"), Zalgo.generate("Horrorterrors"),Zalgo.generate("Glitches"),Zalgo.generate("Grimoires"),Zalgo.generate("Fluthlu"),Zalgo.generate("The Zoologically Dubious")];
 
 
 List<String> space_levels = ["GREENTIKE", "RIBBIT RUSTLER", "FROG-WRANGLER"];

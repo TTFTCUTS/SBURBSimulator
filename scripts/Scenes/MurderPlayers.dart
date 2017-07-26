@@ -4,7 +4,7 @@ part of SBURBSim;
 class MurderPlayers extends Scene {
 	bool canRepeat = true;
 	List<dynamic> playerList = [];  //what players are already in the medium when i trigger?
-	List<dynamic> murderers = [];	
+	List<dynamic> murderers = [];
 
 
 	MurderPlayers(Session session): super(session);
@@ -20,7 +20,7 @@ class MurderPlayers extends Scene {
 			}
 		}
 
-		return this.murderers.length > null;
+		return this.murderers.length > 0;
 	}
 	dynamic addImportantEvent(player){
 		//print( "A player is dead. Dream Self: " + player.isDreamSelf + " God Destiny: " + player.godDestiny + " GodTier: " + player.godTier);

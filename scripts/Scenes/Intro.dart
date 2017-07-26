@@ -101,7 +101,7 @@ class Intro  extends IntroScene{
 		if(this.player.aspect == "Time" && !this.player.object_to_prototype.illegal){
 			return this.session.addImportantEvent(new TimePlayerEnteredSessionWihtoutFrog(this.session, current_mvp.stats["power"],this.player,null) );
 		}else{
-			return this.session.addImportantEvent(new PlayerEnteredSession(this.session, current_mvp.power,this.player,null) );
+			return this.session.addImportantEvent(new PlayerEnteredSession(this.session, current_mvp.stats["power"],this.player,null) );
 		}
 
 	}

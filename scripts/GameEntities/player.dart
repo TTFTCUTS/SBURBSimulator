@@ -182,7 +182,9 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 			if(stat.name == "MANGRIT"){
 				tmpStatHolder.power = tmpStatHolder.power * stat.multiplier * strength;
 			}else{
-				tmpStatHolder[stat.name] += tmpStatHolder[stat.name] * stat.multiplier * strength;
+				if(tmpStatHolder[stat.name] != null) {
+					tmpStatHolder[stat.name] += (tmpStatHolder[stat.name] ?? 0) * stat.multiplier * strength;
+				}
 			}
 		}
 
@@ -195,7 +197,7 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 				statHolder[key] = statHolder[key] * 2;
 			}
 		}
-		tmpStatHolder.keys.forEach((k) => doubleStats); 
+		tmpStatHolder.keys.forEach((k) => doubleStats);
 		//denizen.setStats(tmpStatHolder.minLuck,tmpStatHolder.maxLuck,tmpStatHolder.hp,tmpStatHolder.mobility,tmpStatHolder.sanity,tmpStatHolder.freeWill,tmpStatHolder.power,true, false, [],1000000);
 		denizen.setStatsHash(tmpStatHolder);
 		this.denizen = denizen;
@@ -2951,10 +2953,12 @@ Player clonePlayer(Player player, Session session, bool isGuardian) {
 
 
 //mobility is "natural" way to sort players but this works, too.
-  void sortPlayersByFreeWill(List<Player> players) {
-    return players.sort((Player a, Player b) {
-      return a.getStat("freeWill") - b.getStat("freeWill");
-    });
+  List<Player> sortPlayersByFreeWill(List<Player> players) {
+	  if(players == null) {
+		  throw("sortPlayersByFreeWill was called, but players was null");
+	  }
+	  players.sort((Player a, Player b) => a.getStat("freeWill").compareTo(b.getStat("freeWill")));
+	  return players;
   }
 
 
