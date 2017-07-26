@@ -268,8 +268,8 @@ class SceneRenderingEngine {
 
   }
 	dynamic drawReviveDead(div, player, ghost, enablingAspect){
-	  var canvasId = div.attr("id") + "commune_" +player.chatHandle + ghost.chatHandle+player.power+ghost.power;
-	  String canvasHTML = "<br><canvas id;='" + canvasId +"' width='" +canvasWidth + "' height;="+canvasHeight + "'>  </canvas>";
+	  var canvasId = div.id + "commune_" +player.chatHandle + ghost.chatHandle+player.power+ghost.power;
+	  String canvasHTML = "<br><canvas id='" + canvasId +"' width='" +canvasWidth + "' height="+canvasHeight + "'>  </canvas>";
 	  div.append(canvasHTML);
 	  var canvas = querySelector("#${canvasId}");
 	  var pSpriteBuffer = getBufferCanvas(querySelector("#sprite_template"));

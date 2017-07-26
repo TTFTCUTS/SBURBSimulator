@@ -417,7 +417,7 @@ void addImageTag(String url){
 	//only do it if image hasn't already been added.
 	if(querySelector("#${escapeId(url)}") == null) {
 		String tag = '<img id="' + escapeId(url) + '" src = "images/' + url + '" class="loadedimg">';
-		querySelector("#image_staging").appendHtml(tag);
+		querySelector("#image_staging").appendHtml(tag,treeSanitizer: NodeTreeSanitizer.trusted);
 	}
 
 }
@@ -452,8 +452,8 @@ function imgLoaded(imgElement) {
 
 CanvasElement drawReviveDead(Element div, Player player, Player ghost, String enablingAspect){
   String canvasId = "${div.id}commune_${player.chatHandle}${ghost.chatHandle}${player.getStat("power")}${ghost.getStat("power")}";
-  String canvasHTML = "<br><canvas id;='" + canvasId +"' width='" +canvasWidth.toString() + "' height;="+canvasHeight.toString() + "'>  </canvas>";
-  div.appendHtml(canvasHTML);
+  String canvasHTML = "<br><canvas id='" + canvasId +"' width='" +canvasWidth.toString() + "' height="+canvasHeight.toString() + "'>  </canvas>";
+  div.appendHtml(canvasHTML,treeSanitizer: NodeTreeSanitizer.trusted);
   CanvasElement canvas = querySelector("#${canvasId}");
   CanvasElement pSpriteBuffer = getBufferCanvas(querySelector("#sprite_template"));
   drawSprite(pSpriteBuffer,player);
@@ -653,11 +653,11 @@ void drawCharSheet(CanvasElement canvas, Player player){
   int i = allStats.length;
 
     ctx.fillText("MANGRIT: ",left_margin,current+line_height*i);
-    ctx.fillText((player.permaBuffs["MANGRIT"]).round(),right_margin,current+line_height*i);
+    ctx.fillText((player.permaBuffs["MANGRIT"]).round().toString(),right_margin,current+line_height*i);
     i++;
 
   ctx.fillText("Quests Completed: ",left_margin,current+line_height*i);
-  ctx.fillText(player.getStat("landLevel").toString(),right_margin,current+line_height*i);
+  ctx.fillText(player.landLevel.toString(),right_margin,current+line_height*i);
   i++;
 
   ctx.fillText("Former Friends Killed: ",left_margin,current+line_height*i);

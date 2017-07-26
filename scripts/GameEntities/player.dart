@@ -61,7 +61,7 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 	bool murderMode = false;  //kill all players you don't like. odds of a just death skyrockets.
 	bool leftMurderMode = false; //have scars, unless left via death.
 	num corruptionLevelOther = 0; //every 100 points, sends you to next grimDarkLevel.
-	num grimDark = 0;  //  0 = none, 1 ;= some, 2 = some more 3 ;= full grim dark with aura and font and everything.
+	num grimDark = 0;  //  0 = none, 1 = some, 2 = some more 3 = full grim dark with aura and font and everything.
 	bool leader = false;
 	num landLevel = 0; //at 10, you can challenge denizen.  only space player can go over 100 (breed better universe.)
 	bool denizenFaced = false;
@@ -162,16 +162,15 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 		//print("Strength for denizen " + name + " is: " + strength);
 		//based off existing denizen code.  care about which aspect i am.
 		//also make minion here.
-		var denizen = new Denizen("Denizen " +name, this.id, this.session);
-		var denizenMinion = new DenizenMinion(name + " Minion", this.id, this.session);
+		GameEntity denizen = new Denizen("Denizen " +name, this.id, this.session);
+		GameEntity denizenMinion = new DenizenMinion(name + " Minion", this.id, this.session);
 		var tmpStatHolder = {};
 		tmpStatHolder["minLuck"] = -10;
-		tmpStatHolder["abscondable"] = true; //players can decide to flee like little bitches
-        tmpStatHolder["canAbscond"] = false;
 		tmpStatHolder["maxLuck"] = 10;
 		tmpStatHolder["hp"] = 10 * strength;
 		tmpStatHolder["mobility"] = 10;
 		tmpStatHolder["sanity"] = 10;
+    tmpStatHolder["alchemy"] = 10;
 		tmpStatHolder["freeWill"] = 10;
 		tmpStatHolder["power"] = 5 * strength;
 		tmpStatHolder["grist"] = 1000;
@@ -180,7 +179,7 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 			//alert("I have associated stats: " + i);
 			var stat = this.associatedStats[i];
 			if(stat.name == "MANGRIT"){
-				tmpStatHolder.power = tmpStatHolder.power * stat.multiplier * strength;
+				tmpStatHolder["power" ]= tmpStatHolder["power"] * stat.multiplier * strength;
 			}else{
 				if(tmpStatHolder[stat.name] != null) {
 					tmpStatHolder[stat.name] += (tmpStatHolder[stat.name] ?? 0) * stat.multiplier * strength;
@@ -192,10 +191,8 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 
 		denizenMinion.setStatsHash(tmpStatHolder);
 		tmpStatHolder["power"] = 10*strength;
-		void doubleStats(key,statHolder) {
-			if(statHolder[key] is int || statHolder[key] is double) {
-				statHolder[key] = statHolder[key] * 2;
-			}
+		for(String key in tmpStatHolder.keys){
+			tmpStatHolder[key] = tmpStatHolder[key] * 2; // same direction as minion stats, but bigger.
 		}
 		tmpStatHolder.keys.forEach((k) => doubleStats);
 		//denizen.setStats(tmpStatHolder.minLuck,tmpStatHolder.maxLuck,tmpStatHolder.hp,tmpStatHolder.mobility,tmpStatHolder.sanity,tmpStatHolder.freeWill,tmpStatHolder.power,true, false, [],1000000);
@@ -257,7 +254,7 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 	}
 	dynamic strongDenizenNames(){
 	    print("What if you don't want stranth? " + this.session.session_id.toString());
-		var ret = ['Yaldabaoth', '<span class ;= "void">Nobrop, the </span>Null', '<span class = "void">Paraxalan, The </span>Ever-Searching', "<span class ;= 'void'>Algebron, The </span>Dilletant", '<span class = "void">Doomod, The </span>Wanderer', 'Jörmungandr','Apollyon','Siseneg','Borunam','<span class ;= "void">Jadeacher the,</span>Researcher','Karmiution','<span class = "void">Authorot, the</span> Robot', '<span class ;= "void">Abbiejean, the </span>Scout', 'Aspiratcher, The Librarian','<span class = "void">Recurscker, The</span>Hollow One','Insurorracle','<span class ;= "void">Maniomnia, the Dreamwaker</span>','Kazerad','Shiva','Goliath'];
+		var ret = ['Yaldabaoth', '<span class = "void">Nobrop, the </span>Null', '<span class = "void">Paraxalan, The </span>Ever-Searching', "<span class = 'void'>Algebron, The </span>Dilletant", '<span class = "void">Doomod, The </span>Wanderer', 'Jörmungandr','Apollyon','Siseneg','Borunam','<span class = "void">Jadeacher the,</span>Researcher','Karmiution','<span class = "void">Authorot, the</span> Robot', '<span class = "void">Abbiejean, the </span>Scout', 'Aspiratcher, The Librarian','<span class = "void">Recurscker, The</span>Hollow One','Insurorracle','<span class = "void">Maniomnia, the Dreamwaker</span>','Kazerad','Shiva','Goliath'];
 		return this.session.rand.pickFrom(ret);
 	}
 	dynamic weakDenizenNames(){
@@ -472,11 +469,11 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 	}
 	dynamic chatHandleShort(){
     RegExp exp = new RegExp(r"""\b(\w)|[A-Z]""", multiLine:true);
-    return exp.allMatches(chatHandle).join('').toUpperCase();
+    return joinMatches(exp.allMatches(chatHandle)).toUpperCase();
 	}
 	dynamic chatHandleShortCheckDup(otherHandle){
     RegExp exp = new RegExp(r"""\b(\w)|[A-Z]""", multiLine:true);
-    String tmp =  exp.allMatches(chatHandle).join('').toUpperCase();
+    String tmp = joinMatches(exp.allMatches(chatHandle)).toUpperCase();
 		if(tmp == otherHandle){
 			tmp = tmp + "2";
 		}
@@ -701,7 +698,7 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 			f.flavorText = " All allies just settle their shit for a little while. Cool it. ";
 			this.fraymotifs.add(f);
 		}else if(this.bloodColor == "#ffc3df"){
-		    var f = new Fraymotif([],  "'<font color;='pink'>"+this.chatHandle + " and the Power of Looove~~~~~<3<3<3</font>'", 1);
+		    var f = new Fraymotif([],  "'<font color='pink'>"+this.chatHandle + " and the Power of Looove~~~~~<3<3<3</font>'", 1);
             f.effects.add(new FraymotifEffect("RELATIONSHIPS",3,false));
             f.effects.add(new FraymotifEffect("RELATIONSHIPS",3,true));
             f.flavorText = " You are pretty sure this is not a real type of Troll Psionic.  It heals everybody in a bullshit parade of sparkles, and heart effects despite your disbelief. Everybody is also SUPER MEGA ULTRA IN LOVE with each other now, but ESPECIALLY in love with  " + this.htmlTitleHP() + ". ";
@@ -1124,7 +1121,7 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 	}
 	String shortLand(){
 		RegExp exp = new RegExp(r"""\b(\w)""", multiLine:true);
-		return exp.allMatches(land).join('').toUpperCase();
+		return joinMatches(exp.allMatches(land)).toUpperCase();
 	}
 	String htmlTitle(){
 		return getFontColorFromAspect(this.aspect) + this.title() + "</font>";
@@ -1444,13 +1441,13 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 		}
 		return bestRelationshipSoFar.target;
 	}
-	dynamic getBestFriendFromList(potentialFriends, debugCallBack){
+	dynamic getBestFriendFromList(List<Player>potentialFriends, debugCallBack){
 		var bestRelationshipSoFar = this.relationships[0];
 		for(num i = 0; i<potentialFriends.length; i++){
 			var p = potentialFriends[i];
 			if(p!=this){
-				var r = this.getRelationshipWith(p);
-				if(!r){
+				Relationship r = this.getRelationshipWith(p);
+				if(r == null){
 					//print("Couldn't find relationships between " + this.chatHandle + " and " + p.chatHandle);
 					//print(debugCallBack);
 					//print(potentialFriends);
@@ -1571,9 +1568,9 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 	}
 	void initSpriteCanvas(){
 		//print("Initializing derived stuff.");
-		this.spriteCanvasID = this.id.toString()+"spriteCanvas";
+		this.spriteCanvasID = "spriteCanvas${this.id.toString()}";
 		String canvasHTML = "<br/><canvas style='display:none' id='" + this.spriteCanvasID+"' width='" +400.toString() + "' height="+300.toString() + "'>  </canvas>";
-		querySelector("#playerSprites").appendHtml(canvasHTML);
+		querySelector("#playerSprites").appendHtml(canvasHTML,treeSanitizer: NodeTreeSanitizer.trusted);
 		//print("append? -> $canvasHTML");
 	}
 	void renderSelf(){
@@ -1667,8 +1664,8 @@ class Player extends GameEntity{ //TODO trollPlayer subclass of player??? (have 
 	}
 	String toOCDataString(){
 	    //for now, only extentsion sequence is for classpect. so....
-	    String x = "&x;=" +this.toDataBytesX(); //ALWAYS have it. worst case scenario is 1 bit.
-		return "b=" + this.toDataBytes() + "&s;="+this.toDataStrings(true) + x;
+	    String x = "&x=" +this.toDataBytesX(); //ALWAYS have it. worst case scenario is 1 bit.
+		return "b=" + this.toDataBytes() + "&s="+this.toDataStrings(true) + x;
 	}
 	dynamic toDataBytesX(){
         var builder = new ByteBuilder();
@@ -2867,7 +2864,7 @@ Player clonePlayer(Player player, Session session, bool isGuardian) {
   clone.murderMode = player.murderMode;  //kill all players you don't like. odds of a just death skyrockets.
   clone.leftMurderMode = player.leftMurderMode; //have scars, unless left via death.
   clone.corruptionLevelOther =  player.corruptionLevelOther; //every 100 points, sends you to next grimDarkLevel.
-  clone.grimDark = player.grimDark;  //  0 = none, 1 ;= some, 2 = some more 3 ;= full grim dark with aura and font and everything.
+  clone.grimDark = player.grimDark;  //  0 = none, 1 = some, 2 = some more 3 = full grim dark with aura and font and everything.
   clone.leader = player.leader;
   clone.landLevel = player.landLevel; //at 10, you can challenge denizen.  only space player can go over 100 (breed better universe.)
   clone.denizenFaced = player.denizenFaced;

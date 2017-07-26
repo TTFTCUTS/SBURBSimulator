@@ -24,19 +24,19 @@ class YellowYard extends Scene {
 		this.session.yellowYard = true;
 		Element div2 = null;
 		String tmp = "<div id = 'yyholder'></div><bR>";
-		div.appendHtml(tmp);
+		div.appendHtml(tmp,treeSanitizer: NodeTreeSanitizer.trusted);
 		div2 = querySelector("#yyholder");
 		//this.timePlayer.wasteInfluenced = true; //can't go back now. shit, yes you can scratch
 		Player time = this.getDoomedTimeClone();
 
 		time.influenceSymbol = "mind_forehead.png";
-		//String html = "<img src ;= 'images/yellow_yard.png'>";
+		//String html = "<img src = 'images/yellow_yard.png'>";
 		String html = "<div id = '4thwall' style='background:url(images/4thwall.png); width:1000px; height:521px;'>";
 		Session session = this.session;
-		div2.appendHtml(html);
+		div2.appendHtml(html,treeSanitizer: NodeTreeSanitizer.trusted);
 		querySelector("#4thwall").onClick.listen((Event e) {
 			//helloWorld();
-			String html = "<div id ;= 'yellow_yard.png' style='background:url(images/yellow_yard.png); width:1000px; height: 521px'>";
+			String html = "<div id = 'yellow_yard.png' style='background:url(images/yellow_yard.png); width:1000px; height: 521px'>";
 			yyrEventsGlobalVar = session.importantEvents;
 			num count = 14;
 			//yyrEventsGlobalVar = padEventsToNumWithKilling(yyrEventsGlobalVar, this.session, time,num);
@@ -48,7 +48,7 @@ class YellowYard extends Scene {
 			for (int i = 0; i < count; i++) {
 				if (i < yyrEventsGlobalVar.length) {
 					yyrEventsGlobalVar[i].doomedTimeClone = time;
-					//String customRadio = "<img src ;= 'images/mind_radio.png' id = 'decision"+i+  "'>";
+					//String customRadio = "<img src = 'images/mind_radio.png' id = 'decision"+i+  "'>";
 					//http://www.tutorialrepublic.com/faq/how-to-create-custom-radio-buttons-using-css-and-jquery.php
 					html += " <span class='custom-radio'><input type='radio' name='decision' value='$i'></span>${yyrEventsGlobalVar[i].humanLabel()}<br>";
 				} else { //no more important events to undo
@@ -73,7 +73,7 @@ class YellowYard extends Scene {
 			html += "</div>";
 			html += "</div><br>";
 
-			div2.innerHtml = html;
+			div2.setInnerHtml(html);
 			//wire up custom radio buttons after they are rendered
 			List<Element> radioButtons = querySelectorAll('input[name="decision"]');
 			for (RadioButtonInputElement radioButton in radioButtons) {
@@ -145,7 +145,7 @@ class YellowYard extends Scene {
 		//div.append("<br>"+this.content());
 		//print("Yellow yard is happening. " + this.session.session_id);
 		String canvasHTML = "<br><canvas id='canvasJRAB1${div.id}' width='$canvasWidth' height='$canvasHeight'>  </canvas>";
-		div.appendHtml(canvasHTML);
+		div.appendHtml(canvasHTML,treeSanitizer: NodeTreeSanitizer.trusted);
 
 		CanvasElement canvasDiv = querySelector("#canvasJRAB1${div.id}");
 		String chat = "";
@@ -166,7 +166,7 @@ class YellowYard extends Scene {
 		drawChatABJR(canvasDiv, chat);
 
 		canvasHTML = "<br><canvas id='canvasJRAB22${div.id}' width='$canvasWidth' height='$canvasHeight'>  </canvas>";
-		div.appendHtml(canvasHTML);
+		div.appendHtml(canvasHTML,treeSanitizer: NodeTreeSanitizer.trusted);
 		canvasDiv = querySelector("#canvasJRAB22${div.id}");
 		chat = "";
 		chat += "AB: WAIT! Don't forget to give the Observer the standard warning!\n";
@@ -178,7 +178,7 @@ class YellowYard extends Scene {
 		drawChatABJR(canvasDiv, chat);
 
 		String canvasHTML2 = "<br><canvas id='canvasJRAB2${div.id}' width='$canvasWidth' height='$canvasHeight'>  </canvas>";
-		div.appendHtml(canvasHTML2);
+		div.appendHtml(canvasHTML2,treeSanitizer: NodeTreeSanitizer.trusted);
 		CanvasElement canvasDiv2 = querySelector("#canvasJRAB2${div.id}");
 		chat = "";
 		if(this.timePlayer.dead){
@@ -198,7 +198,7 @@ class YellowYard extends Scene {
 		//might not be another part.
 		if(chat != ""){
 			String canvasHTML3 = "<br><canvas id='canvasJRAB3${div.id}' width='$canvasWidth' height='$canvasHeight'>  </canvas>";
-			div.appendHtml(canvasHTML3);
+			div.appendHtml(canvasHTML3,treeSanitizer: NodeTreeSanitizer.trusted);
 			var canvasDiv3 = querySelector("#canvasJRAB3${div.id}");
 			drawChatJRPlayer(canvasDiv3, chat, player);
 		}

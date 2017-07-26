@@ -95,8 +95,8 @@ abstract class ImportantEvent { //TODO consider making this non abstract and hav
 
   div.append(narration);
 
-  var divID = (div.attr("id")) + "_alt_" + timeClone1.chatHandle;
-  String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth + "' height;="+canvasHeight + "'>  </canvas>";
+  var divID = (div.id) + "_alt_" + timeClone1.chatHandle;
+  String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth + "' height="+canvasHeight + "'>  </canvas>";
   div.append(canvasHTML);
   var canvasDiv = querySelector("#canvas"+ divID);
 
@@ -162,8 +162,8 @@ class PlayerDiedButCouldGodTier extends ImportantEvent{
 			narration +=  " The doomed " + this.doomedTimeClone.htmlTitleBasic() + " vanishes in a cloud of gears to join the final battle.";
 			div.append(narration);
 
-			var divID = (div.attr("id")) + "_alt_" + this.player.chatHandle;
-			String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth + "' height;="+canvasHeight + "'>  </canvas>";
+			var divID = (div.id) + "_alt_" + this.player.chatHandle;
+			String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth + "' height="+canvasHeight + "'>  </canvas>";
 			div.append(canvasHTML);
 			var canvasDiv = querySelector("#canvas"+ divID);
 
@@ -179,8 +179,8 @@ class PlayerDiedButCouldGodTier extends ImportantEvent{
 			var player = this.session.getVersionOfPlayerFromThisSession(this.player);
 			player.makeGodTier();
 
-			var divID2 = (div.attr("id")) + "_alt_god" + player.chatHandle;
-			String canvasHTML2 = "<br><canvas id;='canvas" + divID2+"' width='" +canvasWidth + "' height;="+canvasHeight + "'>  </canvas>";
+			var divID2 = (div.id) + "_alt_god" + player.chatHandle;
+			String canvasHTML2 = "<br><canvas id='canvas" + divID2+"' width='" +canvasWidth + "' height="+canvasHeight + "'>  </canvas>";
 			div.append(canvasHTML2);
 			var canvasDiv2 = querySelector("#canvas"+ divID2);
 			List<dynamic> players = [];
@@ -229,8 +229,8 @@ class PlayerDiedForever  extends ImportantEvent {
 
 			this.doomedTimeClone.makeDead("sacrificing themselves through a YellowYard");
 
-			var divID = (div.attr("id")) + "_alt_" + player.chatHandle;
-			String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth + "' height;="+canvasHeight + "'>  </canvas>";
+			var divID = (div.id) + "_alt_" + player.chatHandle;
+			String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth + "' height="+canvasHeight + "'>  </canvas>";
 			div.append(canvasHTML);
 			var canvasDiv = querySelector("#canvas"+ divID);
 
@@ -288,8 +288,8 @@ class PlayerWentGrimDark  extends ImportantEvent {
 			player.sanity += -10;
 
 
-			var divID = (div.attr("id")) + "_alt_" + player.chatHandle;
-			String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth + "' height;="+canvasHeight + "'>  </canvas>";
+			var divID = (div.id) + "_alt_" + player.chatHandle;
+			String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth + "' height="+canvasHeight + "'>  </canvas>";
 			div.append(canvasHTML);
 			var canvasDiv = querySelector("#canvas"+ divID);
 
@@ -344,8 +344,8 @@ class PlayerWentMurderMode  extends ImportantEvent{
 			player.sanity += -10;
 
 
-			var divID = (div.attr("id")) + "_alt_" + player.chatHandle;
-			String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth + "' height;="+canvasHeight + "'>  </canvas>";
+			var divID = (div.id) + "_alt_" + player.chatHandle;
+			String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth + "' height="+canvasHeight + "'>  </canvas>";
 			div.append(canvasHTML);
 			var canvasDiv = querySelector("#canvas"+ divID);
 
@@ -395,8 +395,8 @@ class JackPromoted  extends ImportantEvent{
 			div.append(narration);
 			this.session.destroyBlackRing();
 
-			var divID = (div.attr("id")) + "_alt_jack_promotion";
-			String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth + "' height;="+canvasHeight + "'>  </canvas>";
+			var divID = (div.id) + "_alt_jack_promotion";
+			String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth + "' height="+canvasHeight + "'>  </canvas>";
 			div.append(canvasHTML);
 			var canvasDiv = querySelector("#canvas"+ divID);
 
@@ -451,8 +451,8 @@ class FrogBreedingNeedsHelp extends ImportantEvent {
 			narration +=  " The doomed " + this.doomedTimeClone.htmlTitleBasic() + " vanishes in a cloud of gears to join the final battle.";
 			div.append(narration);
 
-			var divID = (div.attr("id")) + "_alt_" + spacePlayer.chatHandle;
-			String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth + "' height;="+canvasHeight + "'>  </canvas>";
+			var divID = (div.id) + "_alt_" + spacePlayer.chatHandle;
+			String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth + "' height="+canvasHeight + "'>  </canvas>";
 			div.append(canvasHTML);
 			var canvasDiv = querySelector("#canvas"+ divID);
 
@@ -508,8 +508,8 @@ class PlayerEnteredSession  extends ImportantEvent {
 			this.doomedTimeClone.victimBlood = player.bloodColor;
 
 
-			var divID = (div.attr("id")) + "_alt_" + player.chatHandle;
-			String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth + "' height;="+canvasHeight + "'>  </canvas>";
+			var divID = (div.id) + "_alt_" + player.chatHandle;
+			String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth + "' height="+canvasHeight + "'>  </canvas>";
 			div.append(canvasHTML);
 			var canvasDiv = querySelector("#canvas"+ divID);
 
@@ -565,8 +565,8 @@ class TimePlayerEnteredSessionWihtoutFrog  extends ImportantEvent {
 			player.object_to_prototype.power = 20;
 			player.object_to_prototype.illegal = true;
 			player.object_to_prototype.mobility = 100;
-			var divID = (div.attr("id")) + "_alt_jack_promotion";
-			String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth + "' height;="+canvasHeight + "'>  </canvas>";
+			var divID = (div.id) + "_alt_jack_promotion";
+			String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth + "' height="+canvasHeight + "'>  </canvas>";
 			div.append(canvasHTML);
 			var canvasDiv = querySelector("#canvas"+ divID);
 

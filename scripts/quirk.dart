@@ -4,11 +4,11 @@ part of SBURBSim;
 class Quirk {
  List<dynamic> lettersToReplace = []; //array of two element arrays. ["e", "3"], ["two",2] would be two examples. e replaced by 3 and two replaced by 2
  List<dynamic> lettersToReplaceIgnoreCase = [];
- num punctuation = 0; //0 = none, 1 ;= ends of sentences, 2 = perfect punctuation 3;= excessive punctuation
+ num punctuation = 0; //0 = none, 1 = ends of sentences, 2 = perfect punctuation 3= excessive punctuation
  String prefix = ""; //what do you put at the start of a line?
  String suffix = ""; //what do you put at the end of a line?
     //if in murdermode, rerandomize capitalization quirk.
- int capitalization = 0;  //0 == none, 4 = alternating, 5;= inverted, 3 = begining of every word, 1 ;= normal, 2 = ALL;
+ int capitalization = 0;  //0 == none, 4 = alternating, 5= inverted, 3 = begining of every word, 1 = normal, 2 = ALL;
  int favoriteNumber = 0; //getRandomInt;    //num favoriteNumber = 8;    //4 and 6 and 12 has green not change, 7 has SOME green not change
     //take an input string and quirkify it.
 
@@ -20,8 +20,8 @@ class Quirk {
 	}
 
 
-	dynamic translate(input){
-        var ret = input;
+	String translate(String input){
+        String ret = input;
         ret = this.handleCapitilization(ret); //i originally had this line commented out. Why? It caused some quirks to not work (like replacing "E" with 3, but the sentence wasn't allCAPS yet)
         ret = this.handlePunctuation(ret);  //don't want to accidentally murder smileys
         ret = this.handleReplacements(ret);
@@ -35,10 +35,10 @@ class Quirk {
         ret = this.handleSuffix(ret);
         return ret;
     }
-	dynamic toJSON(){
+	Map<String, dynamic> toJSON(){
         return {"favoriteNumber": this.favoriteNumber};
     }
-	dynamic rawStringExplanation(){
+	String rawStringExplanation(){
         String ret = "\n * Capitalization: ";
 
         if(this.capitalization==0){
@@ -87,7 +87,7 @@ class Quirk {
 
         return ret;
     }
-	dynamic stringExplanation(){
+	String stringExplanation(){
         String ret = "<br>Capitalization: ";
 
         if(this.capitalization==0){
@@ -134,28 +134,28 @@ class Quirk {
         }
         return ret;
     }
-	dynamic handlePrefix(input){
+	String handlePrefix(String input){
         return this.prefix + " " + input;
     }
-	dynamic handleSuffix(input){
+	String handleSuffix(String input){
         return input + " " + this.suffix;
     }
-	dynamic randomJapaneseBullshit(){
+	String randomJapaneseBullshit(){
       String japaneseBullshit = "私はあなたの歯の間に私の乳首を感じるようにしたい";
       return japaneseBullshit[(random() * japaneseBullshit.length).floor()]; //true random
     }
-	dynamic replaceEverythingWithRandomJapanese(input){
-      var words = input.split(" ");
+	String replaceEverythingWithRandomJapanese(String input){
+      List<String> words = input.split(" ");
       for(num i = 0; i<words.length; i++){
         words[i] = this.randomJapaneseBullshit();
       }
       return words.join(" ");
     }
-	String handleReplacements(input){
+	String handleReplacements(String input){
         String ret = input;
         for(num i = 0; i<this.lettersToReplace.length; i++){
             //querySelector("#debug").append("Replacing: " +this.lettersToReplace[i][0] );
-            var replace = this.lettersToReplace[i][1] ;
+            String replace = this.lettersToReplace[i][1] ;
             if(replace == "私"){
               ret = this.replaceEverythingWithRandomJapanese(ret);
             }
@@ -163,13 +163,13 @@ class Quirk {
         }
         return ret;
     }
-	dynamic handleReplacementsIgnoreCase(input){
-        var ret = input;
+	String handleReplacementsIgnoreCase(String input){
+        String ret = input;
         for(num i = 0; i<this.lettersToReplaceIgnoreCase.length; i++){
             //querySelector("#debug").append("Replacing: " +this.lettersToReplaceIgnoreCase[i][0] );
             //print("Replacing: " +this.lettersToReplaceIgnoreCase[i][0] );
             //g makes it replace all, i makes it ignore case
-            var replace = this.lettersToReplaceIgnoreCase[i][1] ;
+            String replace = this.lettersToReplaceIgnoreCase[i][1] ;
             if(replace == "私"){
               ret = this.replaceEverythingWithRandomJapanese(ret);
             }
@@ -180,10 +180,10 @@ class Quirk {
 	String handlePunctuation(String input){
         String ret = input;
         if(this.punctuation==0){
-            var punctuationless = ret.replaceAll(new RegExp(r"[.?,\/#!;{}=\-_`~]", multiLine:true),"");
+            String punctuationless = ret.replaceAll(new RegExp(r"[.?,\/#!;{}=\-_`~]", multiLine:true),"");
             ret = punctuationless.replaceAll(new RegExp(r"""\s{2,}""", multiLine:true)," ");
         }else if(this.punctuation==1){
-            var punctuationless = ret.replaceAll(new RegExp(r"[,\/#;{}=\-_`~]", multiLine:true),"");
+            String punctuationless = ret.replaceAll(new RegExp(r"[,\/#;{}=\-_`~]", multiLine:true),"");
             ret = punctuationless.replaceAll(new RegExp(r"""\s{2,}""", multiLine:true)," ");
         }else if(this.punctuation==2){
             ret = input;
@@ -197,9 +197,9 @@ class Quirk {
 		//Troll words: year, month, refrigerator, bathtub, ears, heart, brain,rap,nose,mouth,bed,tea,worm,beans,tree,legs,eyes, gold star,born,toilet,foot,spine,vampire,tits,baby,
 		//red blood adds all of these, mid blood adds half, and eridan or above adds none.
 		//which ones you add are random.
-		var words = [["\\byear\\b","sweep"],["SBURB","SGRUB"],["\\bmonth\\b","perigee"],["\\brefrigerator\\b","\\bthermal hull\\b"],["\\bbathtub\\b","ablution trap"],["\\bears\\b","hear ducts "],["\\bheart\\b","pump biscuit"],["\\bbrain\\b","sponge"],["\\brap\\b","slam poetry"],["\\bnose\\b","sniffnode"],["\\bmouth\\b","squawk gaper"],["\\bbed\\b", "cocoon"],["\\btea\\b","scalding leaf fluid"],["\\bworm", "dirt noodle"],["\\bbean","fart nibblet"],["\\btree\\b","frond nub"],["\\bleg\\b","frond"],["\\bgold star\\b","glitter biscuit"],["\\bborn\\b","hatched"],["\\btoilet\\b","load gaper"],["\\bfoot\\b","prong"],["\\bspine\\b","posture pole"],["vampire","rainbow drinker"],["\\btits\\b","rumble spheres"],["\\bbaby\\b","wiggler"],["eye","gander bulb"]];
+		List<List<String>> words = [["\\byear\\b","sweep"],["SBURB","SGRUB"],["\\bmonth\\b","perigee"],["\\brefrigerator\\b","\\bthermal hull\\b"],["\\bbathtub\\b","ablution trap"],["\\bears\\b","hear ducts "],["\\bheart\\b","pump biscuit"],["\\bbrain\\b","sponge"],["\\brap\\b","slam poetry"],["\\bnose\\b","sniffnode"],["\\bmouth\\b","squawk gaper"],["\\bbed\\b", "cocoon"],["\\btea\\b","scalding leaf fluid"],["\\bworm", "dirt noodle"],["\\bbean","fart nibblet"],["\\btree\\b","frond nub"],["\\bleg\\b","frond"],["\\bgold star\\b","glitter biscuit"],["\\bborn\\b","hatched"],["\\btoilet\\b","load gaper"],["\\bfoot\\b","prong"],["\\bspine\\b","posture pole"],["vampire","rainbow drinker"],["\\btits\\b","rumble spheres"],["\\bbaby\\b","wiggler"],["eye","gander bulb"]];
 
-		var odds = 15 - bloodColors.indexOf(player.bloodColor);   //15 is max odds, 0 is min odds.  after all, even meenah used some low blood words, right?
+		int odds = 15 - bloodColors.indexOf(player.bloodColor);   //15 is max odds, 0 is min odds.  after all, even meenah used some low blood words, right?
 		for(num i = 0; i<words.length; i++){
 			if(this.rand.nextDouble()*15 < odds ){
 				this.lettersToReplaceIgnoreCase.add(words[i]);
@@ -242,7 +242,7 @@ class Quirk {
       num roomLeft = 0;
       //most people spell things, fine, other people have random problems
       if(this.rand.nextDouble() > 0.50){
-          var roomLeft = this.rand.nextIntRange(0,10);
+          roomLeft = this.rand.nextIntRange(0,10);
       }
       if(roomLeft < 0) roomLeft = 0;
 
@@ -273,7 +273,7 @@ class Quirk {
 
 
     }
-	void makeHumanQuirk(player){
+	void makeHumanQuirk(Player player){
       this.capitalization = this.rand.nextIntRange(0,2);
       this.punctuation = this.rand.nextIntRange(0,3);
       this.lettersToReplace = [];
@@ -284,7 +284,7 @@ class Quirk {
       num roomLeft = 0;
       //most people spell things, fine, other people have random problems
       if(this.rand.nextDouble() > 0.50){
-          var roomLeft = this.rand.nextIntRange(0,10);
+          roomLeft = this.rand.nextIntRange(0,10);
       }
       if(roomLeft < 0) roomLeft = 0;
       for(int i = 0; i<roomLeft; i++){
@@ -373,7 +373,7 @@ class Quirk {
 
 
 
-    String handleCapitilization(input){
+    String handleCapitilization(String input){
         String ret = input;
         if(this.capitalization== 0){
             ret = ret.toLowerCase();
@@ -408,19 +408,19 @@ class Quirk {
 
 
 
-dynamic replaceStringAt(str, index, character){
-    return str.substr(0, index) + character + str.substr(index+character.length);
+String replaceStringAt(String str, int index, String character){
+    return str.substring(0, index) + character + str.substring(index+character.length);
 }
 
 
 
-dynamic multiplyCharacter(str, character, times){
+dynamic multiplyCharacter(String str, String character, int times){
         //querySelector("#debug").append("<Br>Going to multiply: " + character + " this many times: " + times);
         String tmp = "";
         for(int i = 0; i<times; i++){
             tmp += character;
         }
-        return str.replaceAll(new RegExp(character), tmp);
+        return str.replaceAll(character, tmp);
 }
 
 
@@ -494,7 +494,7 @@ Quirk randomTrollQuirk(Random rand, Player player){
     }
 
     ret.addNumberQuirk();
-    var roomLeft = ret.rand.nextIntRange(0,6) - ret.lettersToReplace.length;
+    int roomLeft = ret.rand.nextIntRange(0,6) - ret.lettersToReplace.length;
     if(roomLeft < 0) roomLeft = 0;
     for(int i = 0; i<roomLeft; i++){
         if(player.bloodColor == "#99004d" || player.bloodColor == "#610061"){
@@ -509,22 +509,22 @@ Quirk randomTrollQuirk(Random rand, Player player){
 
 
 
-dynamic getOneNormalReplaceArray(Random rand){
+List<String> getOneNormalReplaceArray(Random rand){
     //these should ignore case.
     return rand.pickFrom(conversational_quirks);
 }
 
 
 
-dynamic getOneRandomFishArray(Random rand){
+List<String> getOneRandomFishArray(Random rand){
     return rand.pickFrom(fish_quirks);
 }
 
 
 
 //% to cross or x.  8 for b.  69 for oo.  o+ for o
-dynamic getOneRandomReplaceArray(Random rand){
-    var arr = [["x","%"],["X","%"],["s","z"],["w","vv"],["w","v"],["v","w"],["!","~"],["N","|\\/"],["\\b[a-z]*\\b","私"]];
+List<String> getOneRandomReplaceArray(Random rand){
+    List<List<String>> arr = [["x","%"],["X","%"],["s","z"],["w","vv"],["w","v"],["v","w"],["!","~"],["N","|\\/"],["\\b[a-z]*\\b","私"]];
     arr.add(["M","|\\/|"]);
     arr.add(["W","\\/\\/"]);
     arr.add(["H",")("]);

@@ -1031,7 +1031,7 @@ int getRandomIntNoSeed(min, max) {
     return min + rnd * (max - min);
 }*/
 ////https://en.wikipedia.org/wiki/Linear_congruential_generator#Parameters_in_common_use if i want to have more possible sessions, use 2^32 or 2^64. see wiki
-//have modulus be 2^32 (4294967296), a = 1664525, c ;= 1013904223
+//have modulus be 2^32 (4294967296), a = 1664525, c = 1013904223
 /*seededRandom = (max, min){
 	/*random_number = (lcg.previous * a + c) % modulus;
     lcg.previous = random_number;
@@ -1130,7 +1130,7 @@ dynamic indexToWords(i){
 
 
 void debug(String str){
-	querySelector("#debug").appendHtml("<br>" + str);
+	querySelector("#debug").appendHtml("<br>" + str,treeSanitizer: NodeTreeSanitizer.trusted);
 }
 
 
@@ -1308,6 +1308,10 @@ List<String> rage_land_titles = ["Mirth","Whimsy","Madness","Impossibility", "Ch
 List<String> hope_land_titles = ["Angels","Hope","Belief","Faith","Determination", "Possibility", "Hymns", "Heroes", "Chapels", "Lies", "Bullshit"];
 List<String> life_land_titles = ["Dew","Spring","Beginnings","Vitality", "Jungles", "Swamps", "Gardens", "Summer", "Chlorophyll", "Moss", "Rot", "Mold"];
 
+
+//google is an in joke because apparently google reports that all sessions are crashed and it is beautiful and google is a horrorterror.
+List<String> corruptedOtherLandTitles = [Zalgo.generate("Google"), Zalgo.generate("Horrorterrors"),Zalgo.generate("Glitches"),Zalgo.generate("Grimoires"),Zalgo.generate("Fluthlu"),Zalgo.generate("The Zoologically Dubious")];
+
 //typoed special snowlake once insteada snowflake, and now it's a land.
 List<String> free_land_titles = ["Snowlake", "Heat","Sand","Brains","Haze","Tea","Flow","Maps","Caves","Tents","Wrath","Rays","Glass","Lava","Magma"]
 ..addAll(["Shade","Frost","Rain","Fog","Trees","Flowers","Books","Technology","Ice","Water", "Waterfalls","Rocks"])
@@ -1318,10 +1322,11 @@ List<String> free_land_titles = ["Snowlake", "Heat","Sand","Brains","Haze","Tea"
 ..addAll(["Bone","Arenas","Wonder","Fluff","Cotton","Domes","Gold","Silver","Bronze","Ruby","Ribbon"])
 ..addAll(["Hair","Teeth","Tendrils","Mouths","Paint","Pain","Wood","Colors","Echoes","Fossils","Roses","Tulips","Mummies", "Zombies", "Corpses"])
 ..addAll(["Mysteries","Splendor","Luxury","Cash","Coins","Crystals","Gemstones","Cards","Tarot","Wagons","Puzzles","Mayhem","Redundancy","Redundancy"])
-..addAll(["Obsolescence","Deceit","Ruse","Distraction","Libraries","Blocks","Video Games","Vermin","Butchers","Meat","Clouds", "Horses"]);
+..addAll(["Obsolescence","Deceit","Ruse","Distraction","Libraries","Blocks","Video Games","Vermin","Butchers","Meat","Clouds", "Horses"])
 
-//google is an in joke because apparently google reports that all sessions are crashed and it is beautiful and google is a horrorterror.
-List<String> corruptedOtherLandTitles = [Zalgo.generate("Google"), Zalgo.generate("Horrorterrors"),Zalgo.generate("Glitches"),Zalgo.generate("Grimoires"),Zalgo.generate("Fluthlu"),Zalgo.generate("The Zoologically Dubious")];
+..addAll(corruptedOtherLandTitles);
+
+
 
 
 List<String> space_levels = ["GREENTIKE", "RIBBIT RUSTLER", "FROG-WRANGLER"];
@@ -1618,7 +1623,7 @@ List<dynamic> interests = []
 	..addAll(justice_interests);
 
 
-var prefixes = ["8;=D",">->","//", "tumut",")","><>","(", "\$", "?", "=begin", "=end"]
+var prefixes = ["8=D",">->","//", "tumut",")","><>","(", "\$", "?", "=begin", "=end"]
 	..addAll(["<3","<3<","<>","c3<","{","}","[","]","'",".",",","~","!","~","^","&","#","@","%","*"]);
 
 //debug("TODO: interest quirks, is it worth it?");
@@ -1887,7 +1892,7 @@ String getRandomColor() {
 
 /*function uniqueArrayBecauesIEIsAWhinyBitch(arr) {
     List<dynamic> a = [];
-    for (var i=0, l;=arr.length; i<l; i++)
+    for (var i=0, l=arr.length; i<l; i++)
         if (a.indexOf(arr[i]) === -1 && arr[i] !== '')
             a.add(arr[i]);
     return a;

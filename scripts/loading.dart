@@ -92,8 +92,8 @@ void addImageTagLoading(url){
 		//print("I couldn't find a document with id of: " + url);
 		String tag = '<img id="' + escapeId(url) + '" src = "images/' + url + '" class="loadedimg">';
 		//var urlID = urlToID(url);
-		//String tag = '<img id ;="' + urlID + '" src = "' + url + '" style;="display:none">';
-		querySelector("#loading_image_staging").appendHtml(tag);
+		//String tag = '<img id ="' + urlID + '" src = "' + url + '" style="display:none">';
+		querySelector("#loading_image_staging").appendHtml(tag,treeSanitizer: NodeTreeSanitizer.trusted);
 	}else{
 		//print("I thought i found a document with id of: " + url);
 
@@ -170,6 +170,7 @@ void loadImage(String img, String skipInit) {
 //load pesterchum, blood, big aspect symbols, echeladders, god tier level up, romance symbols, babies, grubs
 dynamic loadOther(String skipInit){
 	if(simulationMode == true) return checkDone(skipInit);
+		loadImage("Credits/recursiveSlacker.png", skipInit);
 	  if(cool_kid){
 		loadImage("/Bodies/coolk1dlogo.png",skipInit);
 		loadImage("/Bodies/coolk1dsword.png",skipInit);

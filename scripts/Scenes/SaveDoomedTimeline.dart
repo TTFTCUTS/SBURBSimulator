@@ -43,8 +43,8 @@ class SaveDoomedTimeLine extends Scene {
 	void renderContent(div){
 		print("time clone " + this.timePlayer + " " + this.session.session_id.toString());
 		div.append("<br><img src = 'images/sceneIcons/time_icon.png'>"+this.content());
-		var divID = (div.attr("id"));
-		String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth.toString() + "' height;="+canvasHeight.toString() + "'>  </canvas>";
+		var divID = (div.id);
+		String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth.toString() + "' height="+canvasHeight.toString() + "'>  </canvas>";
 		div.append(canvasHTML);
 		var canvas = querySelector("#canvas"+ divID);
 		drawTimeGears(canvas);

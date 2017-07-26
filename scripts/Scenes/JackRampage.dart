@@ -66,10 +66,10 @@ class JackRampage extends Scene{
 	}
 	void renderPrestabs(div, stabbings){
 			num repeatTime = 1000;
-			var divID = (div.attr("id")) + "_final_boss";
+			var divID = (div.id) + "_final_boss";
 			var ch = canvasHeight;
 
-			String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth.toString() + "' height;="+ch + "'>  </canvas>";
+			String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth.toString() + "' height="+ch + "'>  </canvas>";
 			//div.append(canvasHTML);  //no. not if sprites can be here.
 			//different format for canvas code
 			var canvasDiv = querySelector("#canvas"+ divID);
@@ -138,7 +138,7 @@ class JackRampage extends Scene{
 		for(num i = 0; i<players.length; i++){
 			var player = players[i];
 			if(player.isDreamSelf == true && player.godDestiny == false && player.godTier == false){
-				return this.session.addImportantEvent(new PlayerDiedForever(this.session, current_mvp.power,player) );
+				return this.session.addImportantEvent(new PlayerDiedForever(this.session, current_mvp.getStat("power"),player) );
 			}
 		}
 		*/

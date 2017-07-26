@@ -26,13 +26,13 @@ class FightKing extends Scene {
 }
 	void renderGoodguys(div){
 		num repeatTime = 1000;
-		var divID = (div.attr("id")) + "_final_boss";
+		var divID = (div.id) + "_final_boss";
 		var ch = canvasHeight;
 		var fightingPlayers = this.getGoodGuys();
 		if(fightingPlayers.length > 6){
 			ch = canvasHeight*1.5; //a little bigger than two rows, cause time clones
 		}
-		String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth.toString() + "' height;="+ch + "'>  </canvas>";
+		String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth.toString() + "' height="+ch + "'>  </canvas>";
 		div.append(canvasHTML);
 		//different format for canvas code
 		var canvasDiv = querySelector("#canvas"+ divID);

@@ -53,7 +53,7 @@ class Reckoning extends Scene {
 			intro += "was not on the ball with timeline management. Nothing you can do about it. <Br><Br>GAME OVER.";
 			this.session.doomedTimeline = true;
 			intro += "<br><br>";
-			querySelector("#story").appendHtml(intro);
+			querySelector("#story").appendHtml(intro,treeSanitizer: NodeTreeSanitizer.trusted);
 			print("reckoning scratch button");
 			this.session.scratchAvailable = true;
 			SimController.instance.renderScratchButton(this.session);
@@ -73,7 +73,7 @@ class Reckoning extends Scene {
 
 		}else{
 			intro += " <br><br>No one is alive. <BR><BR>Game Over.  ";
-			intro += "<img src ;= 'images/abj_watermark.png' class='watermark'>";
+			intro += "<img src = 'images/abj_watermark.png' class='watermark'>";
 			var strongest = findStrongestPlayer(this.session.players);
 			intro += "The MVP of the session was: " + strongest.htmlTitle() + " with a power of: " + strongest.getStat("power");
 		}

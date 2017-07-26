@@ -30,7 +30,8 @@ class Random implements Math.Random {
 		this._impl = new Math.Random(seed);
 	}
 
-	int nextIntRange(int min, int max) {
+	int nextIntRange(int min, int max) { 
+		//TODO: fix this crappy workaround
 		if(min > 0) {
 			return this.nextInt(max-min) + min;
 		}

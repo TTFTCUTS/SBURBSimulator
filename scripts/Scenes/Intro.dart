@@ -62,7 +62,7 @@ class Intro  extends IntroScene{
 		if(this.player.object_to_prototype.getStat("power") > 200 && rand.nextDouble() > .8){
 			String divID = (div.id);
 			String canvasHTML = "<br><canvas id='canvaskernel" + divID+"' width='" +canvasWidth.toString() + "' height="+canvasHeight.toString() + "'>  </canvas>";
-			div.appendHtml(canvasHTML);
+			div.appendHtml(canvasHTML,treeSanitizer: NodeTreeSanitizer.trusted);
 			CanvasElement canvas = querySelector("#canvaskernel"+ divID);
 			List<Player> times = findAllAspectPlayers(this.session.players, "Time"); //they don't have to be in the medium, though
 			Player timePlayer = rand.pickFrom(times); //ironically will probably allow more timeless sessions without crashes.
@@ -92,16 +92,16 @@ class Intro  extends IntroScene{
 			this.player.object_to_prototype.helpPhrase = " is interested in trying to figure out how to play the game, since but for shenanigans they would be playing it themselves.";
 
 		}
-		div.appendHtml(ret);
+		div.appendHtml(ret,treeSanitizer: NodeTreeSanitizer.trusted);
 		return "";
 	}
 	dynamic addImportantEvent(){
 		var current_mvp = findStrongestPlayer(this.session.players);
 		//print("Entering session, mvp is: " + current_mvp.power);
 		if(this.player.aspect == "Time" && !this.player.object_to_prototype.illegal){
-			return this.session.addImportantEvent(new TimePlayerEnteredSessionWihtoutFrog(this.session, current_mvp.stats["power"],this.player,null) );
+			return this.session.addImportantEvent(new TimePlayerEnteredSessionWihtoutFrog(this.session, current_mvp.getStat("power"),this.player,null) );
 		}else{
-			return this.session.addImportantEvent(new PlayerEnteredSession(this.session, current_mvp.stats["power"],this.player,null) );
+			return this.session.addImportantEvent(new PlayerEnteredSession(this.session, current_mvp.getStat("power"),this.player,null) );
 		}
 
 	}
@@ -127,7 +127,7 @@ class Intro  extends IntroScene{
 			chatText += Scene.chatLine(player2Start, player2,"Social obligation complete. Goodbye.");
 			return chatText;
 	}
-	dynamic lightChat(player1, player2){
+	String lightChat(player1, player2){
 		var player1Start = player1.chatHandleShort()+ ": ";
 		var player2Start = player2.chatHandleShortCheckDup(player1.chatHandleShort())+ ": "; //don't be lazy and usePlayer1Start as input, there's a colon.
 		var r1 = player1.getRelationshipWith(player2);
@@ -520,7 +520,7 @@ class Intro  extends IntroScene{
 		}
 		return chatText;
 	}
-	dynamic alienChat(player1, div){
+  String alienChat(player1, Element div){
 		//print("inside alien chat");
 		var player2 = player1.getBestFriend(); //even if they are dead. even if they are from another session.
 		var player1Start = player1.chatHandleShort()+ ": ";
@@ -568,12 +568,12 @@ class Intro  extends IntroScene{
 				}
 
 		}
-		drawChat(querySelector("#canvas"+ (div.getAttribute("id"))), player1, player2, chatText,"discuss_sburb.png");
-		return null;
+		//drawChat(querySelector("#canvas"+ (div.id)), player1, player2, chatText,"discuss_sburb.png");
+		return chatText; //only one place draws to screen now
 	}
-	dynamic getChat(player1, player2, div){
+	String getChat(player1, player2, div){
 
-		if(!player1.fromThisSession(this.session) || !player1.land){
+		if(!player1.fromThisSession(this.session) || player1.land != null){
 			return this.alienChat(player1,div);
 		}
 
@@ -610,10 +610,10 @@ class Intro  extends IntroScene{
 
 		return this.getNormalChat(player1, player2);
 	}
-	dynamic chat(div){
+	dynamic chat(Element div){
 		num repeatTime = 1000;
-		Element canvasHTML = new Element.html("<span><br><canvas id='canvas" + (div.getAttribute("id")) +"' width='" +canvasWidth.toString() + "' height="+canvasHeight.toString() + "'>  </canvas></span>");
-		div.append(canvasHTML);
+		String canvasHTML = "<br><canvas id='canvas" + (div.id) +"' width='" +canvasWidth.toString() + "' height="+canvasHeight.toString() + "'>  </canvas>";
+		div.appendHtml(canvasHTML,treeSanitizer: NodeTreeSanitizer.trusted);
 		//first, find/make pesterchum skin. Want it to be no more than 300 tall for now.
 		//then, have some text I want to render to it.
 		//filter through quirks, and render.  (you can splurge and make more quirks here, future me)
@@ -637,22 +637,19 @@ class Intro  extends IntroScene{
 
 
 		var chatText = this.getChat(player1,player2,div);
-		if(chatText == null){//alien chat
-			return;
-		}
 		//alien chat won't get here, renders itself cause can talk to dead
-		drawChat(querySelector("#canvas"+ (div.attr("id"))), player1, player2, chatText,"discuss_sburb.png");
+		drawChat(querySelector("#canvas"+ (div.id)), player1, player2, chatText,"discuss_sburb.png");
 	}
 	@override
 	void renderContent(div, i){
 		//foundRareSession(div, "This is just a test. " + this.session.session_id);
-		Element canvasHTML = new Element.html("<canvas class = 'charSheet hidden' id='firstcanvas" + this.player.id.toString()+"_" + this.session.session_id.toString()+"' width='400' height='1000'>  </canvas>");
-		div.append(canvasHTML);
+		String canvasHTML = "<canvas style='display:none' class = 'charSheet' id='firstcanvas" + this.player.id.toString()+"_" + this.session.session_id.toString()+"' width='400' height='1000'>  </canvas>";
+		div.appendHtml(canvasHTML,treeSanitizer: NodeTreeSanitizer.trusted);
 		var canvasDiv = querySelector("#firstcanvas"+ this.player.id.toString()+"_" + this.session.session_id.toString());
 		drawCharSheet(canvasDiv,this.player);
 		this.player.generateDenizen();
 		var alt = this.addImportantEvent();
-		if(alt && alt.alternateScene(div)){
+		if(alt != null && alt.alternateScene(div)){
 			return;
 		}
 		String narration = "";
@@ -660,12 +657,12 @@ class Intro  extends IntroScene{
 		if(this.player.land == null){
 			//print("This session is:  " + this.session.session_id + " and the " + this.player.title() + " is from session: " + this.player.ectoBiologicalSource + " and their land is: " + this.player.land);
 		}
-		if(!this.player.fromThisSession(this.session) || this.player.land != null){
+		if(!this.player.fromThisSession(this.session) || this.player.land == null){
 			narration += "<br>The " + this.player.htmlTitle() + " has been in contact with the native players of this session for most of their lives. It's weird how time flows differently between universes. Now, after inumerable shenanigans, they will finally be able to meet up face to face.";
 			if(this.player.dead==true){
 				print(session.session_id.toString() + " dead player enters, " +this.player.title());
 				narration+= "Wait. What?  They are DEAD!? How did that happen? Shenenigans, probably. I...I guess time flowing differently between universes is still a thing that is true, and they were able to contact them even before they died.  Shit, this is extra tragic.  <br>";
-				div.append(narration);
+				div.appendHtml(narration,treeSanitizer: NodeTreeSanitizer.trusted);
 				this.session.availablePlayers.add(this.player);
 				return;
 			}
@@ -717,7 +714,7 @@ class Intro  extends IntroScene{
 					narration += "The Black Queen's RING OF ORBS "+ this.session.convertPlayerNumberToWords() + "FOLD grows stronger from prototyping the " +  this.player.object_to_prototype.name +". ";
 				}
 			narration += "The Black King's SCEPTER grows stronger from prototyping the " +  this.player.object_to_prototype.name +". ";
-				div.append(narration);
+				div.appendHtml(narration,treeSanitizer: NodeTreeSanitizer.trusted);
 
 				return;
 			}
@@ -748,7 +745,7 @@ class Intro  extends IntroScene{
 			}
 			narration += "The Black King's SCEPTER grows stronger from prototyping the " +  this.player.object_to_prototype.name +". ";
 		}
-		div.append(new Element.html("<span>${narration}</span>"));
+		div.appendHtml(narration,treeSanitizer: NodeTreeSanitizer.trusted);
 		this.chat(div);
 		this.session.availablePlayers.add(this.player);
 	}

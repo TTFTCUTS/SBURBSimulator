@@ -34,7 +34,7 @@ class GetTiger extends Scene{
 		var text = this.content();
 
 		num repeatTime = 1000;
-		var divID = (div.attr("id")) + "_tiger";
+		var divID = (div.id) + "_tiger";
 		var ch = canvasHeight;
 		if(this.deadPlayersToGodTier.length > 6){
 			ch = canvasHeight*2;
@@ -42,7 +42,7 @@ class GetTiger extends Scene{
 		var players = this.deadPlayersToGodTier;
 		if(!players[0].dead){
 			div.append("<br><img src = 'images/sceneIcons/rainbow_ascend_animated.gif'> " + text);
-			String canvasHTML = "<br><canvas id;='canvas" + divID+"' width='" +canvasWidth.toString() + "' height;="+ch + "'>  </canvas>";
+			String canvasHTML = "<br><canvas id='canvas" + divID+"' width='" +canvasWidth.toString() + "' height="+ch + "'>  </canvas>";
 			div.append(canvasHTML);
 			//different format for canvas code
 			var canvasDiv = querySelector("#canvas"+ divID);
