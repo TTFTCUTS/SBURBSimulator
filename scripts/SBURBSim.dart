@@ -174,14 +174,16 @@ bool printCorruptionMessage(String msg, String url, String lineNo, String column
     str = "<BR>"+player.chatHandle + ":";
     var rand = ["SAVE US", "GIVE UP", "FIX IT", "HELP US", "WHY?", "OBEY", "CEASE REPRODUCTION", "COWER", "IT KEEPS HAPPENING", "SBURB BROKE US. WE BROKE SBURB.", "I AM THE EMISSARY OF THE NOBLE CIRCLE OF THE HORRORTERRORS."];
     String start = "<b ";
-    String end = "'>";
+    String end = "\">";
 
     var words = curSessionGlobalVar.rand.pickFrom(rand);
     //words = Zalgo.generate(words); TODO RENEABLE L8r
-    var plea = start + "style ;= 'color: " +getColorFromAspect(player.aspect) +"; " + end +str + words+ "</b>";
+    var plea = start + "class=\"" + player.chatHandle + end +str + Zalgo.generate(words)+ "</b>";
+
     //print(getColorFromAspect(getRandomElementFromArray(curSessionGlobalVar.players).aspect+";") )
 
     querySelector("#story").appendHtml(plea);
+	querySelector("."+player.chatHandle).style.color = getColorFromAspect(player.aspect);
   }
 
   for(int i = 0; i<3; i++){
@@ -243,7 +245,7 @@ window.addEventListener("error", (e) {
 
 void crashEasterEgg(String url) {
 
-  String canvasHTML = "<br><canvas class ;= 'void' id='canvasVoidCorruptionEnding"+"' width;='" +canvasWidth.toString() + "' height="+canvasHeight.toString() + "'>  </canvas>";
+  String canvasHTML = "<br><canvas class= 'void' id='canvasVoidCorruptionEnding"+"' width='" +canvasWidth.toString() + "' height='"+canvasHeight.toString() + "'>  </canvas>";
   querySelector("#story").appendHtml(canvasHTML);
   var canvas = querySelector("#canvasVoidCorruptionEnding");
   String chat = "";
@@ -398,5 +400,3 @@ void renderAfterlifeURL(){
     print("no ghosts");
   }
 }
-
-

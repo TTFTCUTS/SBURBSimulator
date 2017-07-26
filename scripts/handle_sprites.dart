@@ -426,7 +426,7 @@ void addImageTag(String url){
   //print(url);
 	//only do it if image hasn't already been added.
 	if(querySelector("#${escapeId(url)}") == null) {
-		String tag = '<img id="' + url + '" src = "images/' + url + '" class="loadedimg">';
+		String tag = '<img id="' + escapeId(url) + '" src = "images/' + url + '" class="loadedimg">';
 		querySelector("#image_staging").appendHtml(tag);
 	}
 
@@ -887,8 +887,7 @@ void drawWhatever(canvas, imageString){
 	addImageTag(imageString);
 	ImageElement img=querySelector("#${escapeId(imageString)}");
     if(img == null) {
-        print("img was null!");
-        print("was looking for ${escapeId(imageString)}");
+        throw("Image was null when drawing. Was looking for ${escapeId(imageString)}");
     }
     else {
 	    ctx.drawImage(img, 0, 0);
@@ -1063,8 +1062,7 @@ void drawChatJRPlayer(canvas, chat, player){
 	var width = img.width;
 	var height = img.height;
     if(img == null) {
-        print("img was null!");
-        print("was looking for ${escapeId(imageString)}");
+        throw("Image was null. Looking for ${escapeId(imageString)}");
     }
 	ctx.drawImage(img,0,0);
 
